@@ -1,13 +1,4 @@
 def read_human_chat(file_path):
-    """
-    Reads a chat file and returns a list of dictionaries containing the person name and text
-    
-    Args:
-        file_path (str): Path to the chat file
-        
-    Returns:
-        list: List of dictionaries with 'nomePessoa' and 'texto' keys
-    """
     chat_data = []
     
     try:
@@ -15,7 +6,6 @@ def read_human_chat(file_path):
             for line in file:
                 line = line.strip()
                 if line.startswith('Human'):
-                    # Split the line into person and text
                     parts = line.split(':', 1)
                     if len(parts) == 2:
                         chat_entry = {

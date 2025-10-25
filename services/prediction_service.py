@@ -1,4 +1,4 @@
-from milvus_repository import MilvusRepository
+from repositories.milvus_repository import MilvusRepository
 import stylo_metrix as sm
 
 class PredictionService:
