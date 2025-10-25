@@ -67,3 +67,5 @@ VisualizationService.create_detailed_bar_chart(
     human2_incorrect=results['human2_incorrect'],
     output_path='./detailed_accuracy_chart.png'
 )
+
+VisualizationService.create_confusion_matrix(results, output_path='./confusion_matrix.png')

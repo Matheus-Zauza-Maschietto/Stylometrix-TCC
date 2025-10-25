@@ -110,3 +110,45 @@ class VisualizationService:
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         print(f"Gráfico detalhado salvo em: {output_path}")
         plt.show()
+
+    @staticmethod
+    def create_confusion_matrix(results: dict = None, output_path: str = 'confusion_matrix.png'):
+        if results is None:
+            print("Erro: 'results' não fornecido. Não é possível gerar a matriz de confusão.")
+            return None
+
+        h1_correct = results.get('human1_correct', 0)
+        h1_incorrect = results.get('human1_incorrect', 0)
+        h2_incorrect = results.get('human2_incorrect', 0)
+        h2_correct = results.get('human2_correct', 0)
+
+        cm = np.array([[h1_correct, h1_incorrect],
+                       [h2_incorrect, h2_correct]])
+
+        fig, ax = plt.subplots(figsize=(6, 5))
+        im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+
+        thresh = cm.max() / 2. if cm.max() > 0 else 0
+        for i in range(cm.shape[0]):
+            for j in range(cm.shape[1]):
+                ax.text(j, i, f"{int(cm[i, j])}",
+                        ha='center', va='center',
+                        color='white' if cm[i, j] > thresh else 'black',
+                        fontsize=14, fontweight='bold')
+
+        ax.set_xlabel('Predito', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Real', fontsize=11, fontweight='bold')
+        ax.set_xticks([0, 1])
+        ax.set_yticks([0, 1])
+        ax.set_xticklabels(['Human 1', 'Human 2'])
+        ax.set_yticklabels(['Human 1', 'Human 2'])
+        ax.set_title('Matriz de Confusão (2x2)', fontsize=13, fontweight='bold')
+
+        cbar = fig.colorbar(im, ax=ax)
+        cbar.ax.set_ylabel('Contagem', rotation=270, labelpad=15)
+
+        plt.tight_layout()
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.show()
+
+        return cm
